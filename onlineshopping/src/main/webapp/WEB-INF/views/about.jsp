@@ -1,0 +1,7 @@
+<div class="container">
+			
+		<h1>About Us</h1>
+		<hr>
+		<p class="text-info">This is an about us page</p>
+	
+</div>
