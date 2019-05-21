@@ -53,6 +53,8 @@
 <!-- Custom styles for this template -->
 <link href="${css}/myapp.css" rel="stylesheet">
 
+<!-- for panel -->
+
 <script>
 	window.menu = '${title}';
 	window.contextRoot = '${contextRoot}'
@@ -97,6 +99,11 @@
 			<!-- Load only when user click Show Product -->
 			<c:if test="${userClickShowProduct == true}">
 				<%@include file="singleProduct.jsp"%>
+			</c:if>
+			
+			<!-- Load only when user click Show Product -->
+			<c:if test="${userClickManageProduct == true}">
+				<%@include file="manageProducts.jsp"%>
 			</c:if>
 
 		</div>
