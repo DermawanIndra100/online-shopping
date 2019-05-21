@@ -5,3 +5,5 @@
 	          ${category.name}</a>
 	        </c:forEach>  
          </div>
+         
+         

@@ -43,12 +43,23 @@
 <!-- Bootstrap template color -->
 <link href="${css}/ubuntu.css" rel="stylesheet">
 
+<!-- Bootstrap Readable Theme -->
+<!--<link href="${css}/bootstrap-readable-theme.css" rel="stylesheet">-->
+<!--ini gak perlu karena pake dataTable.bootstrap4.css -->
+
+<!-- Bootstrap data table -->
+<link href="${css}/dataTables.bootstrap.css" rel="stylesheet">
+
 <!-- Custom styles for this template -->
 <link href="${css}/myapp.css" rel="stylesheet">
 
 <script>
 	window.menu = '${title}';
+	window.contextRoot = '${contextRoot}'
+	
 </script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">	
 
 </head>
 
@@ -82,6 +93,11 @@
 			<c:if test="${userClickAllProducts == true or userClickCategoryProducts == true}">
 				<%@include file="listProducts.jsp"%>
 			</c:if>
+			
+			<!-- Load only when user click Show Product -->
+			<c:if test="${userClickShowProduct == true}">
+				<%@include file="singleProduct.jsp"%>
+			</c:if>
 
 		</div>
 
@@ -92,7 +108,13 @@
 		<!-- Bootstrap core JavaScript -->
 		<script src="${js}/jquery.js"></script>
 		<script src="${js}/bootstrap.bundle.min.js"></script>
-
+		
+		<!-- DataTable Plugin -->
+		<script src="${js}/jquery.dataTables.js"></script>
+		
+		<!-- DataTable Bootstrap Script -->
+		<script src="${js}/dataTables.bootstrap4.js"></script>
+		
 		<!-- JavaScript self code -->
 		<script src="${js}/myapp.js"></script>
 
