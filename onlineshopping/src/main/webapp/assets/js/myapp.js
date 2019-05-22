@@ -98,7 +98,7 @@ $(function(){
 		        		 str += '<a href="'+window.contextRoot+ '/show/'+data+'/product" class="btn btn-success"><i class="fa fa-eye"></i></a> &#160';
 		        		 
 		        		 if (row.quantity < 1) {
-		        			 str += '<a href="javascript:void(0)" class="btn btn-success disabled"><i class="fa fa-shopping-cart"></i></a>';
+		        			 str += '<a href="javascript:void(0)" class="btn btn-info disabled"><i class="fa fa-shopping-cart"></i></a>';
 							} else {
 
 								str += '<a href="'+window.contextRoot+ '/cart/add/'+data+'/product" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>';
@@ -117,6 +117,16 @@ $(function(){
 		
 		});
 	}
+	
+	
+	var $alert = $('.alert');
+	
+	if($alert.length){
+		setTimeout(function(){
+			$alert.fadeOut('slow');
+		}, 3000)
+	}
+	
 	
 	
 	
