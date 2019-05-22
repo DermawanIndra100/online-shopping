@@ -19,9 +19,8 @@
 				<div class="card-body">
 					<!-- FORM ELEMENTS -->
 					<sf:form class="form-horizontal" modelAttribute="product"
-						action="${contextRoot}/manage/products" 
-						method="POST"
-						>
+						action="${contextRoot}/manage/products" method="POST"
+						enctype="multipart/form-data">
 
 						<div class="form-group">
 							<label class="control-label col-md-4" for="name">Enter
@@ -30,7 +29,7 @@
 								<sf:input type="text" path="name" id="name"
 									placeholder="Product Name" class="form-control" />
 								<!--  <em class="help-block">Please Enter Product Name!</em> -->
-								<sf:errors path="name" cssClass="help-block" element="em"/>
+								<sf:errors path="name" cssClass="help-block" element="em" />
 							</div>
 						</div>
 
@@ -41,7 +40,7 @@
 								<sf:input type="text" path="brand" id="brand"
 									placeholder="Brand Name" class="form-control" />
 								<!-- <em class="help-block">Please Enter Brand Name!</em> -->
-								<sf:errors path="brand" cssClass="help-block" element="em"/>
+								<sf:errors path="brand" cssClass="help-block" element="em" />
 							</div>
 						</div>
 
@@ -51,7 +50,7 @@
 							<div class="col-md-8">
 								<sf:textarea path="description" id="description" rows="4"
 									class="form-control" placeholder="Write a description here!" />
-								<sf:errors path="description" cssClass="help-block" element="em"/>
+								<sf:errors path="description" cssClass="help-block" element="em" />
 							</div>
 						</div>
 
@@ -62,7 +61,7 @@
 								<sf:input type="number" path="unitPrice" id="unitPrice"
 									placeholder="Unit Price in IDR" class="form-control" />
 								<!-- <em class="help-block">Please Enter Brand Name!</em> -->
-								<sf:errors path="unitPrice" cssClass="help-block" element="em"/>
+								<sf:errors path="unitPrice" cssClass="help-block" element="em" />
 							</div>
 						</div>
 
@@ -72,6 +71,16 @@
 							<div class="col-md-8">
 								<sf:input type="number" path="quantity" id="quantity"
 									placeholder="Quantity Available" class="form-control" />
+								<!-- <em class="help-block">Please Enter Brand Name!</em> -->
+							</div>
+						</div>
+
+						<!-- File element for image upload -->
+						<div class="form-group">
+							<label class="control-label col-md-4" for="file">Select
+								an File: </label>
+							<div class="col-md-8">
+								<sf:input type="file" path="file" id="file" class="form-control" />
 								<!-- <em class="help-block">Please Enter Brand Name!</em> -->
 							</div>
 						</div>
