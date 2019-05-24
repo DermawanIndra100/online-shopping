@@ -128,7 +128,7 @@
 	<div class="row">
 		<div class='col-12'>
 			<h3>Available Products</h3>
-			</hr>
+			
 		</div>
 			
 			<div class="col-12">

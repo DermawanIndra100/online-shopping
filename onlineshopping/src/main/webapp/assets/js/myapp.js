@@ -238,7 +238,7 @@ $(function(){
 						mRender : function(data, type, row) {
 
 							var str = '';
-							str += '<a href="${contextRoot}/manage/'+data+'/product" class="btn btn-warning">';
+							str += '<a href="'+window.contextRoot+'/manage/' + data + '/product" class="btn btn-warning">';
 							str += '<i class="fa fa-pencil"></i></a>';
 							return str;
 						}
