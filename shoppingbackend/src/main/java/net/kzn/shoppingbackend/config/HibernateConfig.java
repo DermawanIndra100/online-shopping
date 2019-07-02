@@ -21,12 +21,13 @@ public class HibernateConfig {
 	//Using MySQL
 	private final static String DATABASE_URL = "jdbc:mysql://localhost:3306/onlineshopping";
 	private final static String DATABASE_DRIVER = "com.mysql.jdbc.Driver";
-	private final static String DATABASE_DIALECT = "org.hibernate.dialect.MySQLDialect";
+	private final static String DATABASE_DIALECT = "org.hibernate.dialect.MySQL57Dialect"; 
+	//ini nih masalahnya org.hibernate.dialect.MySQL5Dialect
 	private final static String DATABASE_USERNAME = "root";
 	private final static String DATABASE_PASSWORD = "";
 	
 	// dataSource bean will be available
-	@Bean
+	@Bean("dataSource")
 	public DataSource getDataSource(){
 		
 		BasicDataSource dataSource = new BasicDataSource();
@@ -61,6 +62,10 @@ public class HibernateConfig {
 		properties.put("hibernate.dialect", DATABASE_DIALECT);
 		properties.put("hibernate.show_sql", "true");
 		properties.put("hibernate.format_sql", "true");
+		
+//		properties.put("hibernate.hbm2ddl.auto", "create");
+		properties.put("hibernate.hbm2ddl.auto", "update");
+		//lah ini harus hati-hati ini adalah ngecreate DB default baru! hati-hati db akan ke-drop dr awal!
 		
 		return properties;
 	}

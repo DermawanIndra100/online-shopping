@@ -22,7 +22,7 @@ CREATE TABLE user_detail (
 	password VARCHAR(50),
 	email VARCHAR(100),
 	contact_number VARCHAR(15),
-	CONSTRAINT pk_user_id PRIMARY KEY (id),
+	CONSTRAINT pk_user_id PRIMARY KEY (id)
 );
 
 INSERT INTO user_detail (first_name, last_name, role, enabled, password, email, contact_number)
@@ -49,7 +49,7 @@ CREATE TABLE product (
 	views INT DEFAULT 0,
 	CONSTRAINT pk_product_id PRIMARY KEY (id),
 	CONSTRAINT fk_product_category_id FOREIGN KEY (category_id) REFERENCES category (id),
-	CONSTRAINT fk_product_supplier_id FOREIGN KEY (supplier_id) REFERENCES user_detail (id),
+	CONSTRAINT fk_product_supplier_id FOREIGN KEY (supplier_id) REFERENCES user_detail (id)
 );
 
 INSERT INTO product (code, name, brand, description, unit_price, quantity, is_active, category_id, supplier_id, purchases, views)
@@ -63,6 +63,45 @@ VALUES ('PRDMNO123PQRX', ' Macbook Pro', 'apple', 'This is one of the best lapto
 INSERT INTO product (code, name, brand, description, unit_price, quantity, is_active, category_id, supplier_id, purchases, views)
 VALUES ('PRDABCXYZDEFX', 'Dell Latitude E6510', 'dell', 'This is one of the best laptop series from dell that can be used!', 48000, 5, true, 1, 3, 0, 0 );
 
+CREATE TABLE address (
+	id int AUTO_INCREMENT,
+	user_id int,
+	address_line_one VARCHAR(100),
+	address_line_two VARCHAR(100),
+	city VARCHAR(20),
+	state VARCHAR(20),
+	country VARCHAR(20),
+	postal_code VARCHAR(10),
+	billing BOOLEAN,
+	shipping BOOLEAN,
+	CONSTRAINT fk_address_user_id FOREIGN KEY (user_id ) REFERENCES user_detail (id),
+	CONSTRAINT pk_address_id PRIMARY KEY (id)
+);
+
+-- the cart table to store the user cart top-level details
+CREATE TABLE cart (
+	id int AUTO_INCREMENT,
+	user_id int,
+	grand_total DECIMAL(10,2),
+	cart_lines int,
+	CONSTRAINT fk_cart_user_id FOREIGN KEY (user_id ) REFERENCES user_detail (id),
+	CONSTRAINT pk_cart_id PRIMARY KEY (id)
+);
+
+CREATE TABLE cart_line (
+	id int AUTO_INCREMENT,
+	cart_id int,
+	total DECIMAL(10,2),
+	product_id int,
+	product_count int,
+	buying_price DECIMAL(10,2),
+	is_available boolean,
+	CONSTRAINT fk_cartline_cart_id FOREIGN KEY (cart_id ) REFERENCES cart (id),
+	CONSTRAINT fk_cartline_product_id FOREIGN KEY (product_id ) REFERENCES product (id),
+	CONSTRAINT pk_cartline_id PRIMARY KEY (id)
+);
 
 
-
+-- cara mengusulkan table buat foreign key
+-- ALTER TABLE `user_detail` ADD INDEX `idx_cart` ( `cart_id` ) ;
+-- ALTER TABLE `user_detail` ADD FOREIGN KEY ( `cart_id` ) REFERENCES `cart` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;

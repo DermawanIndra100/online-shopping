@@ -18,12 +18,30 @@ $(function(){
 		case 'Manage Products':
 			$('#manageProducts').addClass('active');
 			break;
+		case 'User Cart':
+			$('#userCart').addClass('active');
+			break;
 		default:
 			if(menu == "Home") break;
 			$('#listProducts').addClass('active');
 			$('#a_'+menu).addClass('active');
 			break;
 	}
+	
+	
+	//to tackle the csrf token
+	// for handling CSRF token
+	var token = $('meta[name="_csrf"]').attr('content');
+	var header = $('meta[name="_csrf_header"]').attr('content');
+	
+	if(token.length > 0 && header.length > 0) {		
+		// set the token header for the ajax request
+		$(document).ajaxSend(function(e, xhr, options) {			
+			xhr.setRequestHeader(header,token);			
+		});				
+	}
+	
+	
 	
 	// code for jquery dataTable
 	// create a dataset
@@ -97,12 +115,17 @@ $(function(){
 		        		 var str = '';
 		        		 str += '<a href="'+window.contextRoot+ '/show/'+data+'/product" class="btn btn-success"><i class="fa fa-eye"></i></a> &#160';
 		        		 
+		        		 if(userRole == 'ADMIN'){
+		        				str += '<a href="'+window.contextRoot+ '/manage/'+data+'/product" class="btn btn-warning"><i class="fa fa-pencil"></i></a>';
+		        		 } 
+		        		 else {
 		        		 if (row.quantity < 1) {
-		        			 str += '<a href="javascript:void(0)" class="btn btn-info disabled"><i class="fa fa-shopping-cart"></i></a>';
-							} else {
-
-								str += '<a href="'+window.contextRoot+ '/cart/add/'+data+'/product" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>';
+		        			 	str += '<a href="javascript:void(0)" class="btn btn-info disabled"><i class="fa fa-shopping-cart"></i></a>';
+							} 
+		        		 	else {
+								str += '<a href="'+window.contextRoot+ '/cart/add/'+data+'/product" class="btn btn-info"><i class="fa fa-shopping-cart"></i></a>';	
 							}
+		        		 }
 		        		 
 		        		 return str;
 		        		 
@@ -297,5 +320,116 @@ $(function(){
 	}
 	
 	//---------------------------------------------------------------------------------------------------
+	
+	// validating the product form element	
+	// fetch the form element
+	$categoryForm = $('#categoryForm');
+	
+	if($categoryForm.length) {
+		
+		$categoryForm.validate({			
+				rules: {
+					name: {
+						required: true,
+						minlength: 2
+					},
+					description: {
+						required: true	
+					}				
+				},
+				messages: {					
+					name: {
+						required: 'Please enter category name!',
+						minlength: 'Please enter atleast 3 characters for category'
+					},
+					description: {
+						required: 'Please enter product name!'
+					}					
+				},
+				errorElement : "em",
+				errorPlacement : function(error, element) {
+					//add the class of help block
+					error.addClass('help-block');
+					//add the error element after the input element
+					error.insertAfter(element);
+				}				
+			});
+		
+	}
+	
+	
+	//-------------------------------
+	
+	//-------------------login form -----------------------------------------------
+	//---------------------------------------------------------------------------------------------------
+	
+	// validating code for login
+	
+	$loginForm = $('#loginForm');
+	
+	if($loginForm.length) {
+		
+		$loginForm.validate({			
+				rules: {
+					username: {
+						required: true,
+						email: true
+					},
+					password: {
+						required: true	
+					}				
+				},
+				messages: {					
+					username: {
+						required: 'Please enter the email!',
+						email: 'Please enter the valid email address'
+					},
+					password: {
+						required: 'Please enter the password!'
+					}					
+				},
+				errorElement : "em",
+				errorPlacement : function(error, element) {
+					//add the class of help block
+					error.addClass('help-block');
+					//add the error element after the input element
+					error.insertAfter(element);
+				}				
+			});
+		
+	}
+	
+	
+	//-------------------------------
+	// handling the click event of refresh cart button
+	$('button[name="refreshCart"]').click(function(){
+		var cartLineId = $(this).attr('value');
+		var countElement = $('#count_' + cartLineId);
+		var originalCount = countElement.attr('value');
+		var currentCount = countElement.val();
+		// do the checking only the count has changed
+		if(currentCount !== originalCount) {	
+			// check if the quantity is within the specified range
+			if(currentCount < 1 || currentCount > 3) {
+				// set the field back to the original field
+				countElement.val(originalCount);
+				bootbox.alert({
+					size: 'medium',
+			    	message: 'Product Count should be minimum 1 and maximum 3!'
+				});
+			}
+			else {
+				// use the window.location.href property to send the request to the server
+				var updateUrl = window.contextRoot + '/cart/' + cartLineId + '/update?count=' + currentCount;
+				window.location.href = updateUrl;
+			}
+		}
+	});
+	
+	
+	//----------------------------------------------------------------------------
+	
+	
+	
 	
 });
